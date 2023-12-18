@@ -46,7 +46,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("save-vote")
-    public ResponseEntity<?> saveVote(@RequestBody VoteDto vote)
+    public ResponseEntity<Vote> saveVote(@RequestBody VoteDto vote)
     {
         if(electorService.saveVote(vote))
         {
@@ -58,7 +58,7 @@ public class AuthController {
 
 
     @GetMapping("all-candidate")
-    public ResponseEntity<?> getCandidateOfPoliticalParties()
+    public ResponseEntity<Candidates> getCandidateOfPoliticalParties()
     {
         ArrayList<CandidateDto> candidateDtos = candidateService.getAllCandidates();
         if(!candidateDtos.isEmpty())
@@ -70,7 +70,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("online-results")
-    public ResponseEntity<?> getResultsElectionOnline()
+    public ResponseEntity<Results> getResultsElectionOnline()
     {
         ArrayList<ResultDto> resultDtos = resultService.getResult();
         if(!resultDtos.isEmpty())
@@ -82,7 +82,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("all-political-party")
-    public ResponseEntity<?> getAllPoliticalParty()
+    public ResponseEntity<PoliticalParty> getAllPoliticalParty()
     {
         ArrayList<PoliticalParty> politicalParties = electorService.getPoliticalParty();
         if(!politicalParties.isEmpty())
