@@ -7,13 +7,12 @@ import org.system.onlineelection.infrastructure.adapter.entity.*;
 
 public class EntityMapping {
 
-    @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
     public Candidate candidateMapping(CandidateEntity candidateEntity)
     {
-        Candidate candidate = modelMapper.map(candidateEntity, Candidate.class);
-        return candidate;
+        return modelMapper.map(candidateEntity, Candidate.class);
     }
 
     public Admin adminMapping (AdminEntity adminEntity){
@@ -21,8 +20,7 @@ public class EntityMapping {
     }
 
     public Elector electorMapping (ElectorEntity electorEntity){
-        Elector elector = modelMapper.map(electorEntity, Elector.class);
-        return elector;
+        return modelMapper.map(electorEntity, Elector.class);
     }
     public Person personMapping (PersonEntity personEntity){
         return modelMapper.map(personEntity, Person.class);
