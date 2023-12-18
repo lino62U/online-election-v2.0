@@ -78,7 +78,6 @@ public class AuthService {
                         .nameRole(ERole.valueOf(role))
                         .build())
                 .collect(Collectors.toSet());
-        String pass = passwordEncoder.encode(request.getPassword());
 
         PersonEntity user = PersonEntity.builder()
                 .name(request.getName())
