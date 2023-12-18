@@ -73,7 +73,6 @@ public class AuthService {
 
     public AuthResponse register(@NotNull RegisterRequest request) {
 
-        Set<String> strRoles = request.getRoles();
         Set<RoleEntity> roles = request.getRoles().stream()
                 .map(role -> RoleEntity.builder()
                         .nameRole(ERole.valueOf(role))
