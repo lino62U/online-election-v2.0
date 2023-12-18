@@ -59,7 +59,7 @@ public class AuthService {
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+                .toList();
 
 
         Map<String, Object> claims = new HashMap<>();
