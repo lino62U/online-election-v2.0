@@ -1,0 +1,6 @@
+projectKey=elecciononline_
+serverUrl=http://localhost:9000
+serverVersion=9.9.2.77730
+dashboardUrl=http://localhost:9000/dashboard?id=elecciononline_
+ceTaskId=AYx54KshK0EoHVkmqUKb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYx54KshK0EoHVkmqUKb
