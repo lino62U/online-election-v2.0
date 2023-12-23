@@ -1,6 +1,8 @@
 package org.system.onlineelection.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +48,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("save-vote")
-    public ResponseEntity<Vote> saveVote(@RequestBody VoteDto vote)
+    public ResponseEntity<?> saveVote(@RequestBody VoteDto vote)
     {
         if(electorService.saveVote(vote))
         {
@@ -58,7 +60,7 @@ public class AuthController {
 
 
     @GetMapping("all-candidate")
-    public ResponseEntity<Candidates> getCandidateOfPoliticalParties()
+    public ResponseEntity<?> getCandidateOfPoliticalParties()
     {
         ArrayList<CandidateDto> candidateDtos = candidateService.getAllCandidates();
         if(!candidateDtos.isEmpty())
@@ -70,7 +72,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("online-results")
-    public ResponseEntity<Results> getResultsElectionOnline()
+    public ResponseEntity<?> getResultsElectionOnline()
     {
         ArrayList<ResultDto> resultDtos = resultService.getResult();
         if(!resultDtos.isEmpty())
@@ -82,7 +84,7 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("all-political-party")
-    public ResponseEntity<PoliticalParty> getAllPoliticalParty()
+    public ResponseEntity<?> getAllPoliticalParty()
     {
         ArrayList<PoliticalParty> politicalParties = electorService.getPoliticalParty();
         if(!politicalParties.isEmpty())

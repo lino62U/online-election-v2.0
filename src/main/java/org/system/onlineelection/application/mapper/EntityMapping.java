@@ -7,9 +7,9 @@ import org.system.onlineelection.infrastructure.adapter.entity.*;
 
 public class EntityMapping {
 
+    @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
     public Candidate candidateMapping(CandidateEntity candidateEntity)
     {
         return modelMapper.map(candidateEntity, Candidate.class);

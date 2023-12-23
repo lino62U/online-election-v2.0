@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,9 +59,7 @@ public class AuthService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .toList();
-
+                .map(item -> item.getAuthority()).collect(Collectors.toList());
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles",roles);
