@@ -1,4 +1,5 @@
 package org.system.onlineelection.infrastructure.config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +20,9 @@ import org.system.onlineelection.application.service.UserDetailsServiceImpl;
 @Configuration
 @EnableMethodSecurity
 public class WebSecurityConfig {
+    @Autowired
     UserDetailsServiceImpl userDetailsService;
+    @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {

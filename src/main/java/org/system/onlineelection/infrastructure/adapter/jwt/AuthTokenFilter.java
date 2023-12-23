@@ -23,7 +23,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
     private UserDetailsServiceImpl userDetailsService;
     private static final Logger ATFLogger = LoggerFactory.getLogger(AuthTokenFilter.class);
-    @Override @Autowired
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         try {
