@@ -20,7 +20,9 @@ import org.system.onlineelection.application.service.UserDetailsServiceImpl;
 import java.io.IOException;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
+    @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
     private static final Logger ATFLogger = LoggerFactory.getLogger(AuthTokenFilter.class);
     @Override
