@@ -10,16 +10,21 @@ import { GrValidate } from "react-icons/gr";
 import { sendVote } from "./services/sendVote";
 import { LogoutButton } from "../home/components/Logout";
 import { useNavigate } from "react-router-dom";
+import { IoIosTime } from "react-icons/io";
+
 export const Votacion = () => {
   const navigate = useNavigate();
   const { id_person, sub, exp } = decodeToken();
   const [isOpenModal, openModal, closeModal] = useModal();
   const [isOpenModal2, openModal2, closeModal2] = useModal();
   const [isOpenModal3, openModal3, closeModal3] = useModal();
+  const [isOpenModal4, openModal4, closeModal4] = useModal();
 
   const [partys, setPartys] = useState<Party[]>([]);
   const [selectedParty, setSelectedParty] = useState<number>(0);
   const [resultVote, setResultVote] = useState({ status: 0, message: "" });
+  const [remainingTime, setRemainingTime] = useState(calculateRemainingTime());
+
   useEffect(() => {
     const fetchData = async () => {
       const fetchedCandidates = await fetchPartys();
@@ -50,31 +55,35 @@ export const Votacion = () => {
     }
   };
 
-  // Función para redirigir al inicio cuando el tiempo expire
-  const handleTimeout = () => {
+  function calculateRemainingTime() {
+    const now = Math.floor(Date.now() / 1000);
+    const remainingTime = exp - now;
+    return remainingTime > 0 ? remainingTime : 0;
+  }
+
+  const handleEndSession = () => {
     navigate("/");
   };
 
   useEffect(() => {
-    const timeoutId = setTimeout(handleTimeout, exp * 1000); // exp está en segundos
-    return () => clearTimeout(timeoutId);
-  }, [exp, navigate]);
+    const timeoutId = setInterval(() => {
+      const newRemainingTime = calculateRemainingTime();
+      setRemainingTime(newRemainingTime);
 
-  // Función para calcular el tiempo restante
-  const calculateRemainingTime = () => {
-    const now = Math.floor(Date.now() / 1000);
-    const remainingTime = exp - now;
-    if (remainingTime < 0) handleTimeout();
-    return remainingTime > 0 ? remainingTime : 0;
-  };
+      if (newRemainingTime <= 0) {
+        openModal4();
+        clearInterval(timeoutId);
+      }
+    }, 1000);
+
+    return () => clearInterval(timeoutId);
+  }, [exp, navigate]);
 
   return (
     <div className="h-screen px-40 py-20">
       <div className="flex justify-between items-center bg-blue-800 rounded-md py-5 px-5">
         <div>Bienvenido {sub}</div>
-        <div>
-          Tiempo restante en la sesión: {calculateRemainingTime()} segundos
-        </div>
+        <div>Tiempo restante en la sesión: {remainingTime} segundos</div>
         <div>
           <LogoutButton />
         </div>
@@ -138,10 +147,10 @@ export const Votacion = () => {
           <div className="p-3 flex justify-center items-center">
             <img
               src={
-                partys &&
-                (partys.find((e) => e.id === selectedParty)
-                  ?.namePoliticalParty ||
-                  "")
+                partys
+                  ? (partys.find((e) => e.id === selectedParty) || {})
+                      .namePoliticalParty || ""
+                  : ""
               }
               alt="party"
               style={{ width: "80px", height: "80px" }}
@@ -191,6 +200,21 @@ export const Votacion = () => {
             <MdErrorOutline size={40} color="red" />
           )}
           <h2>{resultVote.message}</h2>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={isOpenModal4}
+        closeModal={() => {
+          handleEndSession();
+          closeModal4();
+        }}
+        heightModal={5}
+        widthModal={10}
+      >
+        <div className="flex flex-col gap-1 items-center justify-center pt-3">
+          <h1>Se acabo el tiempo</h1>
+          <IoIosTime size={40} color="red" />
         </div>
       </Modal>
     </div>
