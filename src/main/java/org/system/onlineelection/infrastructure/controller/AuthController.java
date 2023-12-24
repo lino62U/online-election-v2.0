@@ -38,7 +38,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request)
     {
@@ -49,10 +48,9 @@ public class AuthController {
     @PostMapping("save-vote")
     public ResponseEntity<VoteDto> saveVote(@RequestBody VoteDto vote)
     {
-        if(electorService.saveVote(vote))
+        if(Boolean.TRUE.equals(electorService.saveVote(vote)))
         {
-            //return new ResponseEntity<>("Voto almacenado",HttpStatus.OK);
-            return new ResponseEntity<>(vote, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.CONFLICT);
