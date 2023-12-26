@@ -1,6 +1,7 @@
 package org.system.onlineelection.infrastructure.controller;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,7 +38,6 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(loginRequest));
     }
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request)
     {
@@ -46,49 +46,49 @@ public class AuthController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("save-vote")
-    public ResponseEntity<?> saveVote(@RequestBody VoteDto vote)
+    public ResponseEntity<VoteDto> saveVote(@RequestBody VoteDto vote)
     {
-        if(electorService.saveVote(vote))
+        if(Boolean.TRUE.equals(electorService.saveVote(vote)))
         {
-            return new ResponseEntity<>("Voto almacenado",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
 
-        return new ResponseEntity<>("No se puede guardar el voto", HttpStatus.CONFLICT);
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
 
     @GetMapping("all-candidate")
-    public ResponseEntity<?> getCandidateOfPoliticalParties()
+    public ResponseEntity<ArrayList<CandidateDto>> getCandidateOfPoliticalParties()
     {
         ArrayList<CandidateDto> candidateDtos = candidateService.getAllCandidates();
         if(!candidateDtos.isEmpty())
         {
             return new ResponseEntity<>(candidateDtos, HttpStatus.OK);
         }
-        return new ResponseEntity<>("No se encuentran candidatos", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("online-results")
-    public ResponseEntity<?> getResultsElectionOnline()
+    public ResponseEntity<ArrayList<ResultDto>> getResultsElectionOnline()
     {
         ArrayList<ResultDto> resultDtos = resultService.getResult();
         if(!resultDtos.isEmpty())
         {
             return new ResponseEntity<>(resultDtos, HttpStatus.OK);
         }
-        return new ResponseEntity<>("No hay resultados", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>( HttpStatus.NO_CONTENT);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("all-political-party")
-    public ResponseEntity<?> getAllPoliticalParty()
+    public ResponseEntity<ArrayList<PoliticalParty>> getAllPoliticalParty()
     {
         ArrayList<PoliticalParty> politicalParties = electorService.getPoliticalParty();
         if(!politicalParties.isEmpty())
         {
             return new ResponseEntity<>(politicalParties, HttpStatus.OK);
         }
-        return new ResponseEntity<>("No hay partidos politicos", HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

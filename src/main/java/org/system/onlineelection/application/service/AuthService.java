@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,9 +59,7 @@ public class AuthService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
+                .map(item -> item.getAuthority()).collect(Collectors.toList());
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles",roles);
@@ -73,13 +72,11 @@ public class AuthService {
 
     public AuthResponse register(@NotNull RegisterRequest request) {
 
-        Set<String> strRoles = request.getRoles();
         Set<RoleEntity> roles = request.getRoles().stream()
                 .map(role -> RoleEntity.builder()
                         .nameRole(ERole.valueOf(role))
                         .build())
                 .collect(Collectors.toSet());
-        String pass = passwordEncoder.encode(request.getPassword());
 
         PersonEntity user = PersonEntity.builder()
                 .name(request.getName())

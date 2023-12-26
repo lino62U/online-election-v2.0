@@ -14,3 +14,4 @@ public class VoteDto {
     private Integer idPoliticalParty;
     private Date date;
 }
+    
