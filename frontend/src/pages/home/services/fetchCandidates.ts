@@ -3,7 +3,7 @@ import axios from "../../../config/axios";
 
 export const fetchCandidates = async (): Promise<Candidate[]> => {
   try {
-    const response = await axios.get("/auth/all-candidate");
+    const response = await axios.get("/api/candidate/all");
     const candidates: Candidate[] = response.data;
     return candidates;
   } catch (error) {
