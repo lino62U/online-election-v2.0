@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 export const loginService = async (user: Auth): Promise<string | null> => {
   try {
-    const response = await axios.post("api/auth/login", user);
+    const response = await axios.post("/auth/login", user);
     const token = response.data.token;
     if (token) {
       Cookies.set("token", token);

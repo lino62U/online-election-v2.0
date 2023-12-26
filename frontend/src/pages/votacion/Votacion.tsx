@@ -2,14 +2,16 @@ import { decodeToken } from "../../utils/decodeToken";
 import { useState, useEffect } from "react";
 import { Party } from "./interfaces/party.interface";
 import { fetchPartys } from "./services/fetchPartys";
-import Modal from "../../components/Model";
-import { useModal } from "../../hooks/useModal";
 import { Vote } from "./interfaces/vote.interface";
 import { MdErrorOutline } from "react-icons/md";
 import { GrValidate } from "react-icons/gr";
 import { sendVote } from "./services/sendVote";
 import { LogoutButton } from "../home/components/Logout";
 import { useNavigate } from "react-router-dom";
+import { IoIosTime } from "react-icons/io";
+import { useModal } from "../../hooks/useModal";
+import Modal from "../../components/Model";
+
 export const Votacion = () => {
   const navigate = useNavigate();
   const { id_person, sub, exp } = decodeToken();
@@ -20,7 +22,9 @@ export const Votacion = () => {
 
   const [partys, setPartys] = useState<Party[]>([]);
   const [selectedParty, setSelectedParty] = useState<number>(0);
-  const [resultVote, setResultVote] = useState({ status: 0, message: "" })
+  const [resultVote, setResultVote] = useState({ status: 0, message: "" });
+  const [remainingTime, setRemainingTime] = useState(calculateRemainingTime());
+
   useEffect(() => {
     const fetchData = async () => {
       const fetchedCandidates = await fetchPartys();
@@ -49,31 +53,37 @@ export const Votacion = () => {
     } else {
       openModal3();
     }
+  };
+
+  function calculateRemainingTime() {
+    const now = Math.floor(Date.now() / 1000);
+    const remainingTime = exp - now;
+    return remainingTime > 0 ? remainingTime : 0;
   }
 
-  // Función para redirigir al inicio cuando el tiempo expire
-  const handleTimeout = () => {
+  const handleEndSession = () => {
     navigate("/");
-  }
+  };
 
   useEffect(() => {
-    const timeoutId = setTimeout(handleTimeout, exp * 1000); // exp está en segundos
-    return () => clearTimeout(timeoutId);
-  }, [exp, navigate]);
+    const timeoutId = setInterval(() => {
+      const newRemainingTime = calculateRemainingTime();
+      setRemainingTime(newRemainingTime);
 
-  // Función para calcular el tiempo restante
-  const calculateRemainingTime = () => {
-    const now = Math.floor(Date.now() / 1000); 
-    const remainingTime = exp - now;
-    if(remainingTime < 0) handleTimeout(); 
-    return remainingTime > 0 ? remainingTime : 0;
-  };
+      if (newRemainingTime <= 0) {
+        openModal4();
+        clearInterval(timeoutId);
+      }
+    }, 1000);
+
+    return () => clearInterval(timeoutId);
+  }, [exp, navigate]);
 
   return (
     <div className="h-screen px-40 py-20">
       <div className="flex justify-between items-center bg-blue-800 rounded-md py-5 px-5">
         <div>Bienvenido {sub}</div>
-        <div>Tiempo restante en la sesión: {calculateRemainingTime()} segundos</div>        
+        <div>Tiempo restante en la sesiÃ³n: {remainingTime} segundos</div>
         <div>
           <LogoutButton />
         </div>
@@ -193,6 +203,20 @@ export const Votacion = () => {
         </div>
       </Modal>
 
+      <Modal
+        isOpen={isOpenModal4}
+        closeModal={() => {
+          handleEndSession();
+          closeModal4();
+        }}
+        heightModal={5}
+        widthModal={10}
+      >
+        <div className="flex flex-col gap-1 items-center justify-center pt-3">
+          <h1>Se acabo el tiempo</h1>
+          <IoIosTime size={40} color="red" />
+        </div>
+      </Modal>
     </div>
   );
 };

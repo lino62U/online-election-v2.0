@@ -5,7 +5,7 @@ export const sendVote = async (
   vote: Vote
 ): Promise<{ message: string; status: number }> => {
   try {
-    const res = await axiosConfig.post("/api/elector/save-vote", vote);
+    const res = await axiosConfig.post("/auth/save-vote", vote);
     return {
       message: res.data,
       status: 200,
