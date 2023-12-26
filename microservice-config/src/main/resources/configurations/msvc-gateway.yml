@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: auth
+          uri: http://localhost:8100
+          predicates:
+            - Path=/api/auth/**
+            
+        - id: results
+          uri: http://localhost:8074
+          predicates:
+            - Path=/api/result/**
+          filters:
+            - name: CustomAuthorizationFilter
+              args:
+                roles: ["ROLE_ADMIN"]
+        - id: candidate
+          uri: http://localhost:8034
+          predicates:
+            - Path=/api/candidate/**
+          filters:
+            - name: CustomAuthorizationFilter
+        - id: elector
+          uri: http://localhost:8024
+          predicates:
+            - Path=/api/elector/**
+          filters:
+            - name: CustomAuthorizationFilter
+              args:
+                roles: ["ROLE_USER"]
+
+        - id: parties
+          uri: http://localhost:8200
+          predicates:
+            - Path=/api/parties/**
+          filters:
+            - name: CustomAuthorizationFilter
+              args:
+                roles: [ "ROLE_ADMIN" ]
