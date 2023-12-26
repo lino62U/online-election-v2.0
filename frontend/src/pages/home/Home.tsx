@@ -22,6 +22,12 @@ export const Home = () => {
         <div className="flex flex-row  justify-between w-full px-10 py-10">
           <h1 >Bienvenido a "Elecciones Online"</h1>
           <Link
+            to="/register"
+            className=" text-white p-5 bg-blue-700 rounded-lg underline hover:bg-gray-300 hover:text-black"
+          >
+            Registrarse
+          </Link>
+          <Link
             to="/login"
             className=" text-white p-5 bg-blue-700 rounded-lg underline hover:bg-gray-300 hover:text-black"
           >

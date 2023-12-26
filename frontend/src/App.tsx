@@ -6,6 +6,7 @@ import { Login } from "./pages/login/Login";
 import { Votacion } from "./pages/votacion/Votacion";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { Resultado } from "./pages/resultado/Resultado";
+import { RegisterPage } from "./pages/register/Register";
 function App() {
   return (
     <>
@@ -13,6 +14,7 @@ function App() {
         <RouteNotFound>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/votacion"
             element={

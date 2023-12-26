@@ -3,10 +3,16 @@ import { fetchResultPartys } from "./services/fetchResultPartys";
 import { ResultPartys } from "./interfaces/result.interface";
 import { decodeToken } from "../../utils/decodeToken";
 import { LogoutButton } from "../home/components/Logout";
+import { saveResultVotation } from "./services/saveResultVotation";
+import Modal from "../../components/Model";
+import { useModal } from "../../hooks/useModal";
+import { GrValidate } from "react-icons/gr";
+import { MdErrorOutline } from "react-icons/md";
 
 export const Resultado = () => {
     const { sub } = decodeToken();
-
+    const [isOpenModal, openModal, closeModal] = useModal();
+    const [error, setError] = useState<null | string>(null);
     const [resultPartys, setResultPartys] = useState<ResultPartys[]>([]);
     useEffect(() => {
         const fetchData = async () => {
@@ -25,12 +31,17 @@ export const Resultado = () => {
         }
     };
     const winner = findWinner();
+    const handleSaveVotes = async () => {
+        const saveVotes = await saveResultVotation(resultPartys);
+        openModal();
+        setError(saveVotes)
+    }
     return (
         <div className="h-screen px-40 py-20">
             <div className="flex justify-between items-center bg-blue-800 rounded-md py-5 px-5">
                 <div>Bienvenido {sub}</div>
                 <div>
-                    <LogoutButton/>
+                    <LogoutButton />
                 </div>
             </div>
             <div className="flex w-full justify-center py-10">
@@ -70,6 +81,25 @@ export const Resultado = () => {
                     </div>
                 )}
             </div>
+            <div className="pt-3 justify-end w-full flex">
+                <button className="p-2 bg-green-700" onClick={handleSaveVotes}>Guardar Resultados</button>
+            </div>
+            <Modal isOpen={isOpenModal} closeModal={closeModal} widthModal={25} heightModal={20}>
+                <div className="p-5 flex flex-col justify-center items-center gap-3">
+                    {error ? (
+                        <>
+                            <h2>{error}</h2>
+                            <MdErrorOutline size={40} color="red" />
+                        </>
+
+                    ) : (
+                        <>
+                            <h2>Guardado Exitoso</h2>
+                            <GrValidate size={40} color="green" />
+                        </>
+                    )}
+                </div>
+            </Modal>
         </div>
     )
 }

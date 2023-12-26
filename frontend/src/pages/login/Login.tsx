@@ -3,6 +3,7 @@ import { Auth } from "./interfaces/auth.interface";
 import { loginService } from "./services/loginService";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "../../utils/decodeToken";
+import { GoToHome } from "../../components/GoToHome";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -26,16 +27,18 @@ export const Login = () => {
       setError(loginError);
     } else {
       const rol = decodeToken()
-      if(rol.roles.includes("ROLE_USER")) {
+      if (rol.roles.includes("ROLE_USER")) {
         navigate("/votacion")
       }
-      else{
+      else {
         navigate("/resultado")
       }
     }
   };
   return (
     <div className="flex justify-center items-center h-screen">
+      <GoToHome />
+
       <div className="flex flex-col gap-5 bg-gray-800 p-10 rounded-2xl shadow-md shadow-slate-950">
         <div className="flex">
           <h1 className="w-24">Username:</h1>
