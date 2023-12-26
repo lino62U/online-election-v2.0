@@ -7,7 +7,7 @@ export const sendVote = async (
   try {
     const res = await axiosConfig.post("/auth/save-vote", vote);
     return {
-      message: res.data,
+      message: "Voto registrado",
       status: 200,
     };
   } catch (error) {

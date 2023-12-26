@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Register } from "./interfaces/register.interface";
-import { useNavigate } from "react-router-dom";
 import { registerPoliticalParty } from "./services/registerService";
 import { GoToHome } from "../../components/GoToHome";
 
