@@ -72,7 +72,8 @@ El pipeline definido en Jenkins realiza diversas etapas, desde la clonación del
 
 ### 5. **Pruebas funcionales**
    - Se cambia al directorio de pruebas y se ejecutan las pruebas funcionales escritas en Python utilizando el comando `python -m unittest discover`.
-
+![Login](img/3.jpg)
+![Voto](img/4.jpg)
 ### 6. **Pruebas de rendimiento**
    - Se ejecutan pruebas de rendimiento utilizando Apache JMeter.
    - El archivo de prueba se encuentra en la carpeta `performance-test/PruebaOnline.jmx`, y los resultados se guardan en `result.jtl`.
@@ -94,13 +95,10 @@ SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplazar con s
 
 ¡Ahora está listo para ejecutar el pipeline y contribuir al desarrollo del proyecto Online Election v2.0!
 
-## Capturas del sistema:
-![Login](img/3.jpg)
-![Voto](img/4.jpg)
-## Trello
-![Trello](img/8.jpg)
 ## PipeLine Integracion Continua
 ![Pipeline](img/5.jpg)
 [![Pipeline](img/5.jpg)](https://www.youtube.com/watch?v=LwkvyKOG5EM)
 
+## Git Project
+![Trello](img/8.jpg)
 
