@@ -274,7 +274,7 @@ SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplazar con s
 
 ## PipeLine Integracion Continua
 ![Pipeline](img/5.jpg)
-[![Pipeline](img/5.jpg)](https://www.youtube.com/watch?v=LwkvyKOG5EM)
+(https://www.youtube.com/watch?v=LwkvyKOG5EM)
 
 ## Git Project
 ![Trello](img/8.jpg)
