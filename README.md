@@ -6,6 +6,8 @@ Online Election es una aplicación de votación en línea que utiliza Java para 
 ## Estructura del Proyecto
 El proyecto está organizado en dos partes principales: backend y frontend.
 
+## Microservicios Eureka
+![Microservicios_Eureka](img/9.jpg)
 ### Backend
 La parte del servidor de la aplicación está construida con Java y utiliza Spring Boot. Aquí se gestionan las operaciones relacionadas con la lógica de negocio, la seguridad (Spring Security con JSON Web Token), y la conexión a una base de datos MySQL ubicada en la carpeta `database`.
 
@@ -97,8 +99,6 @@ SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplazar con s
 ![Voto](img/4.jpg)
 ## Trello
 ![Trello](img/8.jpg)
-## Microservicios Eureka
-![Microservicios_Eureka](img/9.jpg)
 ## PipeLine Integracion Continua
 ![Pipeline](img/5.jpg)
 [![Pipeline](img/5.jpg)](https://www.youtube.com/watch?v=LwkvyKOG5EM)
