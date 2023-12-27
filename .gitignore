@@ -4,6 +4,7 @@
 # Ignorar archivos y carpetas generados por el sistema operativo
 .DS_Store
 Thumbs.db
+__pycache__
 
 # Ignorar archivos de compilación y carpetas
 node_modules/
