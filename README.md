@@ -69,6 +69,73 @@ El pipeline definido en Jenkins realiza diversas etapas, desde la clonación del
 
 ### 4. **Pruebas unitarias**
    - Se ejecutan las pruebas unitarias del backend mediante el comando `mvn test`.
+   - Uso de junit y mockito
+``` java
+@RunWith(MockitoJUnitRunner.class)
+public class JwtUtilsTest {
+
+    @InjectMocks
+    private JwtUtils jwtUtils;
+
+    private UserDetailsImpl mockUserDetails;
+
+    @Before
+    public void setUp() {
+        mockUserDetails = createMockUserDetails();
+    }
+
+    @After
+    public void tearDown() {
+        // Realizar limpieza después de cada prueba si es necesario
+    }
+
+    @Test
+    public void testGenerateJwtToken() {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(mockUserDetails);
+
+        String token = jwtUtils.generateJwtToken(authentication);
+
+        assertNotNull(token);
+        assertTrue(jwtUtils.validateJwtToken(token));
+        assertEquals("testuser", jwtUtils.getUsernameFromJwtToken(token));
+    }
+
+    @Test
+    public void testGenerateJwtTokenWithClaims() {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(mockUserDetails);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("key", "value");
+
+        String token = jwtUtils.generateJwtToken(authentication, claims);
+
+        assertNotNull(token);
+        assertTrue(jwtUtils.validateJwtToken(token));
+        assertEquals("testuser", jwtUtils.getUsernameFromJwtToken(token));
+    }
+
+    @Test
+    public void testValidateJwtTokenValidToken() {
+        Authentication authentication = mock(Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(mockUserDetails);
+
+        String token = jwtUtils.generateJwtToken(authentication);
+
+        assertTrue(jwtUtils.validateJwtToken(token));
+    }
+
+    @Test
+    public void testValidateJwtTokenInvalidToken() {
+        assertFalse(jwtUtils.validateJwtToken("invalidToken"));
+    }
+
+    private UserDetailsImpl createMockUserDetails() {
+        return new UserDetailsImpl("1", "testuser", "testpassword", null);
+    }
+}
+```
 
 ### 5. **Pruebas funcionales**
    - Se cambia al directorio de pruebas y se ejecutan las pruebas funcionales escritas en Python utilizando el comando `python -m unittest discover`.
