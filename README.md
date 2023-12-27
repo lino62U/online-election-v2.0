@@ -62,6 +62,8 @@ El pipeline definido en Jenkins realiza diversas etapas, desde la clonación del
 ### 3. **Análisis de SonarQube**
    - Se ejecuta un análisis estático del código fuente utilizando SonarQube.
    - La información clave, como el proyecto, la URL de SonarQube y el token de autenticación, se configuran como variables de entorno.
+![SonarQube](img/1.jpg)
+![Issues](img/2.jpg)
 
 ### 4. **Pruebas unitarias**
    - Se ejecutan las pruebas unitarias del backend mediante el comando `mvn test`.
@@ -72,6 +74,8 @@ El pipeline definido en Jenkins realiza diversas etapas, desde la clonación del
 ### 6. **Pruebas de rendimiento**
    - Se ejecutan pruebas de rendimiento utilizando Apache JMeter.
    - El archivo de prueba se encuentra en la carpeta `performance-test/PruebaOnline.jmx`, y los resultados se guardan en `result.jtl`.
+     ![JMeter](img/6.jpg)
+     ![Perfomance](img/7.jpg)
 
 ## Configuración del entorno
 
@@ -87,8 +91,14 @@ SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplazar con s
 ```
 
 ¡Ahora está listo para ejecutar el pipeline y contribuir al desarrollo del proyecto Online Election v2.0!
-## Pruebas de Funcionalidad
-![SonarQube](img/1.jpg)
-![Issues](img/2.jpg)
+
+## Capturas del sistema:
 ![Login](img/3.jpg)
 ![Voto](img/4.jpg)
+## Trello
+![Trello](img/8.jpg)
+## Microservicios Eureka
+![Microservicios_Eureka](img/9.jpg)
+## PipeLine Integracion Continua
+![Pipeline](img/5.jpg)
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=LwkvyKOG5EM" frameborder="0" allowfullscreen></iframe>
