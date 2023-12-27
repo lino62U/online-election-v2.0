@@ -87,3 +87,8 @@ SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplazar con s
 ```
 
 ¡Ahora está listo para ejecutar el pipeline y contribuir al desarrollo del proyecto Online Election v2.0!
+## Pruebas de Funcionalidad
+![SonarQube](img/1.jpg)
+![Issues](img/2.jpg)
+![Login](img/3.jpg)
+![Voto](img/4.jpg)
