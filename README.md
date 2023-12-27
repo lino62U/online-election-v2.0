@@ -254,7 +254,7 @@ if __name__ == "__main__":
 ### 6. **Pruebas de rendimiento**
    - Se ejecutan pruebas de rendimiento utilizando Apache JMeter.
    - El archivo de prueba se encuentra en la carpeta `performance-test/PruebaOnline.jmx`, y los resultados se guardan en `result.jtl`.
-     ![JMeter](img/6.jpg)
+     
      ![Perfomance](img/7.jpg)
 
 ## Configuración del entorno
