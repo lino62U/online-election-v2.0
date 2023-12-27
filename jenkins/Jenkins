@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+    environment {
+        // Especifica la ruta al directorio de inicio de Maven
+        M2_HOME = 'C:\\Program Files\\Maven\\apache-maven-3.9.4'
+        // Añade Maven al PATH
+
+        // Especifica la ruta al directorio de inicio de JMeter
+        JMETER_HOME = 'D:\\A-UNSA\\IS_2\\LAB_06\\apache-jmeter-5.6.2'
+        // Añade JMeter al PATH
+        PATH = "${JMETER_HOME}/bin:${PATH};${M2_HOME}/bin:${PATH}"
+        
+        SONAR_URL = 'http://localhost:9000' // Reemplaza con la URL de tu servidor SonarQube
+        SONAR_LOGIN = 'sqp_012a34c0113ddfc2165b0c1d827380452b228cd5' // Reemplaza con tu token de autenticaciÃ³n de SonarQube
+    }
+    stages {
+        stage('git clone') {
+            steps {
+                git branch: 'main', url: 'https://github.com/lino62U/online-election-v2.0.git'
+            }
+        }
+
+        stage('build backend') {
+            steps {
+                bat "mvn clean package"
+            }
+        }
+        
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    bat "mvn clean verify \"sonar:sonar\" \"-Dsonar.projectKey=ci-backend-scanner\" \"-Dsonar.host.url=${SONAR_URL}\" \"-Dsonar.login=${SONAR_LOGIN}\""
+                }
+            }
+        }
+        
+        stage('unit test') {
+            steps {
+                bat "mvn test"
+            }
+        }
+        
+        stage('functional test') {
+            steps {
+                bat "cd test && python -m unittest discover"
+            }
+        }
+        
+        stage('performance testing') {
+            steps {
+                bat "${JMETER_HOME}/bin/jmeter -n -t performance-test/PruebaOnline.jmx -l result.jtl"
+            }
+        }
+    }
+}
