@@ -9,7 +9,7 @@ El proyecto está organizado en dos partes principales: backend y frontend.
 ## Microservicios Eureka
 ![Microservicios_Eureka](img/9.jpg)
 ### Backend
-La parte del servidor de la aplicación está construida con Java y utiliza Spring Boot. Aquí se gestionan las operaciones relacionadas con la lógica de negocio, la seguridad (Spring Security con JSON Web Token), y la conexión a una base de datos MySQL ubicada en la carpeta `database`.
+La parte del servidor de la aplicación está construida con Java y utiliza Spring Boot. Aquí se gestionan las operaciones relacionadas con la lógica de negocio, la seguridad (Spring Security con JSON Web Token), y la conexión a una base de datos MySQL ubicada en la carpeta `database` junto con una base de datos en MongoDB en el microservicio "result" conforman la estrucutra backend del proyecto.
 
 ### Frontend
 El frontend de la aplicación está construido con React y Vite. Proporciona una interfaz de usuario interactiva para que los usuarios participen en la votación en línea.
